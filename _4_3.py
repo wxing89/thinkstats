@@ -15,16 +15,17 @@
 
 import random
 
-import Pmf
 import Cdf
 import myplot
 
 # alpha = 1
 # xm = 0.5
 def main():
-    num_lsit = [ 0.5 * random.paretovariate(1) for i in range(1000) ]
+    alpha = 1
+    xm = 0.5
+    num_list = [ xm * random.paretovariate(alpha) for i in range(1000) ]
 
-    cdf = Cdf.MakeCdfFromList(num_lsit, 'pareto distribution cdf');
+    cdf = Cdf.MakeCdfFromList(num_list, 'pareto distribution cdf');
 
     myplot.Cdf(cdf, complement=False, xscale='linear', yscale='linear');
     myplot.Save(root='pareto_distribution_cdf',
@@ -32,6 +33,7 @@ def main():
                 xlabel='number',
                 ylabel='probability')
 
+    cdf = Cdf.MakeCdfFromList(num_list, 'pareto distribution ccdf');
     myplot.Cdf(cdf, complement=True, xscale='linear', yscale='log');
     myplot.Save(root='pareto_distribution_ccdf',
                 title='CCDF of pareto distribution',
