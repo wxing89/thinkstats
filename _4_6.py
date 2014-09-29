@@ -19,14 +19,16 @@ import random
 
 import Pmf
 import Cdf
+import math
 import myplot
+import matplotlib.pyplot as plt
 
 # lambda: scale parameter, user alpha
 # k: shape parameter, use beta
 def main():
     alpha = 1
     beta = 5
-    num_list = [ random.weibullvariate(alpha, beta) for i in range(1000) ]
+    num_list = [ random.weibullvariate(alpha, beta) for i in range(8) ]
 
     cdf = Cdf.MakeCdfFromList(num_list, 'weibull distribution cdf');
 
@@ -35,15 +37,18 @@ def main():
                 title='CDF of weibull distribution',
                 xlabel='number',
                 ylabel='probability')
+    myplot.Clf()
 
-    cdf = Cdf.MakeCdfFromList(num_list, 'weibull distribution ccdf');
-    myplot.Cdf(cdf, complement=True, xscale='linear', yscale='log');
+    c_xs = cdf.xs[:-1]
+    c_ps = [ (-math.log(1 - p)) ** (1/beta) for p in cdf.ps if p < 1]
+    ccdf = Cdf.Cdf(xs=c_xs, ps=c_ps, name='weibull distribution ccdf');
+    plt.plot(c_ps, c_xs)
+    plt.show()
+    myplot.Cdf(ccdf, complement=False, xscale='linear', yscale='linear');
     myplot.Save(root='weibull_distribution_ccdf',
                 title='CCDF of weibull distribution',
                 xlabel='number',
-                ylabel='probability',
-                xscale='linear',
-                yscale='log')
+                ylabel='probability')
 
 
 if __name__ == '__main__':
