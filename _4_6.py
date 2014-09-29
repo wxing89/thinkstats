@@ -7,11 +7,11 @@
 # Its CDF is
 # CDF(x) = 1 - exp(-(x / k)**lambda)
 #
-# Can you find a transformation that makes aWeibull distribution look like a
-# straight line? What do the slope and intercept of the line indicate?
+# Can you find a transformation that makes a Weibull distribution look like 
+# a straight line? What do the slope and intercept of the line indicate?
 #
-# Use random.weibullvariate to generate a sample from a Weibull distribu-
-# tion and use it to test your transformation.
+# Use random.weibullvariate to generate a sample from a Weibull distribution
+# and use it to test your transformation.
 
 
 
@@ -42,7 +42,7 @@ def main():
                 title='CCDF of weibull distribution',
                 xlabel='number',
                 ylabel='probability',
-                xscale='log',
+                xscale='linear',
                 yscale='log')
 
 
