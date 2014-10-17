@@ -26,7 +26,7 @@ class Respondents(brfss.Respondents):
 
         t = weights[:]
         t.sort()
-        mu, var = thinkstats.TrimedMeanVar(t)
+        mu, var = thinkstats.TrimmedMeanVar(t)
         print 'n, Mean, Var', len(weights), mu, var
         
         sigma = math.sqrt(var)
@@ -43,4 +43,37 @@ class Respondents(brfss.Respondents):
                     xlabel=xlabel,
                     ylabel='CDF',
                     axis=axis or [0, xmax, 0, 1])
+
+    def MakeFigures(self):
+        '''Generates CDFs and normal plots for weights and log weights.'''
+        weights = [record.wtkg2 for record in self.records
+                   if record.wtkg2 != 'NA']
+        self.MakeNormalModel(weights, root='brfss_weight_model')
+        rankit.MakeNormalPlot(weights,
+                              root='brfss_weight_normal',
+                              title='Adult weight',
+                              ylabel='Weight (kg)')
+
+        log_weights = [math.log(weight) for weight in weights]
+        xmax = math.log(175.0)
+        axis = [3.5, 5.2, 0, 1]
+        self.MakeNormalModel(log_weights,
+                             root='brfss_weight_log',
+                             xmax=xmax,
+                             xlabel='adult weight (log kg)',
+                             axis=axis)
+        rankit.MakeNormalPlot(log_weights,
+                              root='brfss_weight_lognormal',
+                              title='Adult weight',
+                              ylabel='Weight (log kg)')
+
+def main(name):
+    resp = Respondents()
+    resp.ReadRecords()
+    resp.MakeFigures()
+
+
+if __name__ == '__main__':
+    main(*sys.argv)
+
 

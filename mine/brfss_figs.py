@@ -24,9 +24,9 @@ class Respondents(brfss.Respondents):
     """Represents the respondent table."""
 
     def MakeNormalModel(self, weights, root,
-                   xmax=175, 
-                   xlabel='adult weight (kg)',
-                   axis=None):
+                        xmax=175, 
+                        xlabel='adult weight (kg)',
+                        axis=None):
         cdf = Cdf.MakeCdfFromList(weights)
                 
         pyplot.clf()
